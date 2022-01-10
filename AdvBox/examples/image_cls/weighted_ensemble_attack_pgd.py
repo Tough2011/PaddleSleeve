@@ -152,7 +152,8 @@ def main(image_path):
 
     inputs = np.squeeze(img)
     adversary = Adversary(inputs.numpy(), origin_label)
-    adversary.set_status(is_targeted_attack=True, target_label=target_label)
+    if target_label != -1:
+        adversary.set_status(is_targeted_attack=True, target_label=target_label)
 
     attack = PGD(paddle_model, norm="Linf", epsilon_ball=40/255, epsilon_stepsize=15/255)
     # 设定epsilons
