@@ -127,7 +127,8 @@ def target_attack_fgsm(input_image_path, output_image_path, model, tlabel):
 
     inputs = np.squeeze(img)
     adversary = Adversary(inputs.numpy(), label)
-    adversary.set_status(is_targeted_attack=True, target_label=tlabel)
+    if tlabel != -1:
+        adversary.set_status(is_targeted_attack=True, target_label=tlabel)
 
     attack = PGD(paddle_model, norm="Linf", epsilon_ball=40/255, epsilon_stepsize=15/255)
     # 设定epsilons
@@ -169,10 +170,11 @@ def main():
     args = parser.parse_args()
     print_arguments(args)
     target_label = args.target
+    '''
     if target_label == -1:
         print("ERROR: need a target")
         sys.exit(0)
-
+    '''
     attack_model = paddle.vision.models.resnet50(pretrained=True)
     target_attack_fgsm(input_path, output_path, attack_model, target_label)
     label = predict(output_path, attack_model)
@@ -183,7 +185,7 @@ def main():
     label = predict(output_path, attack_model)
     print("mobilenet_v1 adv label={}".format(label))
 
-    # attack_model = paddle.vision.models.resnet18(pretrained=True)
+    attack_model = paddle.vision.models.resnet18(pretrained=True)
     target_attack_fgsm(output_path, output_path, attack_model, target_label)
     label = predict(output_path, attack_model)
     print("resnet18 adv label={}".format(label))
