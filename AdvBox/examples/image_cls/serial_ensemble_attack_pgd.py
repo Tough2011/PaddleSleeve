@@ -183,7 +183,7 @@ def main():
     label = predict(output_path, attack_model)
     print("mobilenet_v1 adv label={}".format(label))
 
-    attack_model = paddle.vision.models.resnet18(pretrained=True)
+    # attack_model = paddle.vision.models.resnet18(pretrained=True)
     target_attack_fgsm(output_path, output_path, attack_model, target_label)
     label = predict(output_path, attack_model)
     print("resnet18 adv label={}".format(label))
