@@ -87,6 +87,12 @@ def main(orig):
 
     # Initialize the network
     model = paddle.vision.models.resnet50(pretrained=True)
+    model.eval()
+    predict = model(img)[0]
+    label = np.argmax(predict)
+    img = np.squeeze(img)
+    inputs = img
+    labels = label
 
     # init a paddle model
     paddle_model = PaddleWhiteBoxModel(
@@ -100,12 +106,7 @@ def main(orig):
         loss=paddle.nn.CrossEntropyLoss(),
         nb_classes=1000)
 
-    model.eval()
-    predict = model(img)[0]
-    label = np.argmax(predict)
-    img = np.squeeze(img)
-    inputs = img
-    labels = label
+    
 
     # Read the labels file for translating the labelindex to english text
     with open('../../../Robustness/perceptron/utils/labels.txt') as info:
