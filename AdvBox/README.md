@@ -306,7 +306,9 @@ thus, the attack is able to succeed.
 After changing all `sync-bn` components into `bn`, run the following commandlines.
 1. `cd PaddleSleeve/AdvBox/examples/objectdetector`
 2. `python target_ghosting_demo.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img=dataloader/demo_pics/000000014439.jpg --target_img=dataloader/demo_pics/masked_0014439.png`
+
 Using extended EOT algorithm:
+
 adversial example train:
 3. `python target_ghosting_eto.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img = dataloader/car_05.jpeg`
 adversial example test:
