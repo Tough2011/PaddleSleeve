@@ -284,6 +284,11 @@ attack, a method using PGD to produce perturbation to minimize Kullback-Leibler 
 between victim and target feature map in PP-YOLO, successfully making it 
 undetect the kite in `000000014439.jpg`. We obtain the feature map by feeding & sniffing 
 the intermediate output `pcls`, the tensor stands for classification confidence in PP-YOLO.
+In ddition, we achieve the extended EOT attacking algorithm, a method using EOT to produce perturbation
+to make the detection method give the wrong detection results. Specifically, we optimize the loss function
+definition using the similar top three labels and top three logits to decrease the object confidence, and 
+thus, the attack is able to succeed.
+
 
 - A kindly Reminder: since paddlepaddle <= 2.1 does not support gradient backward for
  `paddle.nn.SyncBatchNorm` in eval() mode, to run the demonstration, we need to modify 
@@ -301,6 +306,11 @@ the intermediate output `pcls`, the tensor stands for classification confidence 
 After changing all `sync-bn` components into `bn`, run the following commandlines.
 1. `cd PaddleSleeve/AdvBox/examples/objectdetector`
 2. `python target_ghosting_demo.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img=dataloader/demo_pics/000000014439.jpg --target_img=dataloader/demo_pics/masked_0014439.png`
+Using extended EOT algorithm:
+adversial example train:
+3. `python target_ghosting_eto.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img = car_05.jpeg`
+adversial example test:
+4. `python target_ghosting_eto_test.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img=car_05.jpeg`
 
 The successful execution of the `target_ghosting_demo.py`, will produce the following outputs.
 
