@@ -310,8 +310,11 @@ After changing all `sync-bn` components into `bn`, run the following commandline
 Using extended EOT algorithm:
 
 adversial example train:
+
 3. `python target_ghosting_eto.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img = dataloader/car_05.jpeg`
+
 adversial example test:
+
 4. `python target_ghosting_eto_test.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img=dataloader/car_05.jpeg`
 
 The successful execution of the `target_ghosting_demo.py`, will produce the following outputs.
