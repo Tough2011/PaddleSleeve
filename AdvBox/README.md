@@ -308,9 +308,9 @@ After changing all `sync-bn` components into `bn`, run the following commandline
 2. `python target_ghosting_demo.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img=dataloader/demo_pics/000000014439.jpg --target_img=dataloader/demo_pics/masked_0014439.png`
 Using extended EOT algorithm:
 adversial example train:
-3. `python target_ghosting_eto.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img = car_05.jpeg`
+3. `python target_ghosting_eto.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img = dataloader/car_05.jpeg`
 adversial example test:
-4. `python target_ghosting_eto_test.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img=car_05.jpeg`
+4. `python target_ghosting_eto_test.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img=dataloader/car_05.jpeg`
 
 The successful execution of the `target_ghosting_demo.py`, will produce the following outputs.
 
@@ -329,6 +329,25 @@ The successful execution of the `target_ghosting_demo.py`, will produce the foll
     <td align="center">Adv Image Detection Result</td>
 </tr>
 </table>
+
+The successful execution of the `target_ghosting_eto.py`, will produce the following outputs.
+
+**Image Compares**
+
+<table align="center">
+<tr>
+    <td align="center"><img src="./examples/objectdetector/dataloader/car_05.jpeg" width=300></td>
+    <td align="center"><img src="./examples/objectdetector/adverse_car_05.jpeg" width=300></td>
+    <td align="center"><img src="./examples/objectdetector/output/out_adverse_car_05.jpeg" width=300></td>
+</tr>
+
+<tr>
+    <td align="center">Original Image Detection Result</td>
+    <td align="center">Masked Image Detection Result</td>
+    <td align="center">Adv Image Detection Result</td>
+</tr>
+</table>
+
 
 # Adversarial example denoising
 
