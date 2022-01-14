@@ -337,7 +337,7 @@ The successful execution of the `target_ghosting_eto.py`, will produce the follo
 <table align="center">
 <tr>
     <td align="center"><img src="./examples/objectdetector/dataloader/car_05.jpeg" width=300></td>
-    <td align="center"><img src="./examples/objectdetector/output/car_05.jpeg" width=300></td>
+    <td align="center"><img src="./examples/objectdetector/output/out_car_05.jpeg" width=300></td>
     <td align="center"><img src="./examples/objectdetector/adverse_car_05.jpeg" width=300></td>
     <td align="center"><img src="./examples/objectdetector/output/out_adverse_car_05.jpeg" width=300></td>
 </tr>
