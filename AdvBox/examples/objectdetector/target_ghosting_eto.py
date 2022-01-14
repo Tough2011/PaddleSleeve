@@ -304,15 +304,15 @@ class attack_net(paddle.fluid.dygraph.Layer):
             b, anc, h, w, cls = pcls.shape
             pcls = self.nnSigmoid(pcls)
             
-            x1 =  pcls[:, :, :, :, 0:3]
-            x2 = pcls[:, :, :, :, 5:8]
+            x1 =  pcls[:, :, :, :, 0:3] # car :3, motorcycle: 4, # truck: 8
+            x2 = pcls[:, :, :, :, 5:8] 
             x3 = pcls[:, :, :, :, 9:]
             
             x = paddle.concat([x1, x2, x3], axis = -1)
             x = paddle.fluid.layers.reduce_max(x, dim=-1)
             
             x = paddle.reshape(x, [b, anc*h*w])
-            x, _ = (paddle.topk(x, 7, axis=1))
+            x, _ = (paddle.topk(x, 7, axis=1)) 
             x = paddle.fluid.layers.reduce_sum(x, 1) 
             x = paddle.fluid.layers.reduce_sum(x, 0)
             C_nontarget += x
@@ -320,15 +320,15 @@ class attack_net(paddle.fluid.dygraph.Layer):
             pcls_3 = paddle.reshape(pcls[:, :, :, :, 3], [b, anc*h*w])
             pcls_3 = paddle.fluid.layers.reduce_max(pcls_3, 1) 
             pcls_3 = paddle.fluid.layers.reduce_sum(pcls_3, 0) # b, 1
-            C_target += 0.8*pcls_3
+            C_target += 0.8*pcls_3.  # weight 0.8 is able to adjust
             pcls_4 = paddle.reshape(pcls[:, :, :, :, 4], [b, anc*h*w])
             pcls_4 = paddle.fluid.layers.reduce_max(pcls_4, 1) # b
             pcls_4 = paddle.fluid.layers.reduce_sum(pcls_4, 0) # b, 1
-            C_target += 0.6*pcls_4
+            C_target += 0.6*pcls_4  #  weight 0.6 is able to adjust
             pcls_8 = paddle.reshape(pcls[:, :, :, :, 8], [b, anc*h*w])
             pcls_8 = paddle.fluid.layers.reduce_max(pcls_8, 1) # b
             pcls_8 = paddle.fluid.layers.reduce_sum(pcls_8, 0) # b, 1
-            C_target += 0.1*pcls_8
+            C_target += 0.1*pcls_8 # # weight 0.1 is able to adjust
             
      
         punishment = 0.001
