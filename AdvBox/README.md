@@ -285,9 +285,9 @@ The successful execution of the `predict_adv`, will produce the following output
 <table align="center">
 <tr>
     <td align="center"><img src="./examples/image_segmentation/dataloader/P0024.jpg" width=300></td>
-    <td align="center"><img src="./examples/image_segmentation/output/result/pseudo_color_prediction/out_POO24.jpg" width=300></td>
+    <td align="center"><img src="./examples/image_segmentation/output/result/pseudo_color_prediction/out_POO24.png" width=300></td>
     <td align="center"><img src="./examples/image_segmentation/output/result/adv_P0024.jpg" width=300></td>
-    <td align="center"><img src="./examples/image_segmentation/output/result/pseudo_color_prediction/outadv_POO24.jpg" width=300></td>
+    <td align="center"><img src="./examples/image_segmentation/output/result/pseudo_color_prediction/outadv_POO24.png" width=300></td>
 </tr>
 
 <tr>
