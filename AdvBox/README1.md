@@ -258,49 +258,6 @@ for batch_id, data in enumerate(train_loader()):
     x_data_augmented, y_data_augmented = adversarial_trans(x_data.numpy(), y_data.numpy())
 ```
 
-
-
-# Adversarial Perturbation for Image Segmentation
-Adversarial perturbation for image segmentation, which usually use digital attack methods for adversarial training and evaluating the robustness 
-of segmentaion model. Here we provide a demonstration to generate adversarial 
-perturbation for BiseNetv2 in the digital world. The demonstration is based on 
-**[PaddleSeg](#https://github.com/PaddlePaddle/PaddleSeg.git)** . 
-
-
-
-In `PaddleSleeve/AdvBox/examples/image_segmentation`, we demonstrate the Target Ghosting 
-attack, a method using PGD to produce perturbation to minimize the feature difference between
-the values in non-target position and target position, successfully making the object undetected 
-and unsegmented in the images.  We use the model ouput of BiseNetv2 as the feature maps, the tensor 
-stands for segmentation confidence in BiseNetv2.
-
-run the following commandlines to adversial example train and test:
-1. `cd PaddleSleeve/AdvBox/examples/image_segmentation`
-2. `CUDA_VISIBLE_DEVICES=0 python predict_adv.py        --config configs/quick_start/bisenet_optic_disc_512x512_1k.yml  --model_path ./path_segModel_testData/model_add_oppo2.pdparams    --image_path ./dataloader/P0024.jpg        --save_dir output/result`
-
-The successful execution of the `predict_adv`, will produce the following outputs.
-
-**Image Compares**
-
-<table align="center">
-<tr>
-    <td align="center"><img src="./examples/image_segmentation/dataloader/P0024.jpg" width=300></td>
-    <td align="center"><img src="./examples/image_segmentation/output/result/pseudo_color_prediction/out_POO24.jpg" width=300></td>
-    <td align="center"><img src="./examples/image_segmentation/output/result/adv_P0024.jpg" width=300></td>
-    <td align="center"><img src="./examples/image_segmentation/output/result/pseudo_color_prediction/outadv_POO24.jpg" width=300></td>
-</tr>
-
-<tr>
-    <td align="center">Original Image</td>
-    <td align="center">Segmentation result</td>
-    <td align="center">Adv Image</td>
-    <td align="center">Adv image segmentation result</td>
-</tr>
-</table>
-
-
-
-
 # Adversarial Perturbation for Object Detection
 Adversarial perturbation for object detection, usually grouped into digital and 
 physical classes, is used for adversarial training and evaluating the robustness 
@@ -614,5 +571,3 @@ We appreciate your contributions!
 
 # Citing
 If you find this toolbox useful for your research, please consider citing.
-
-
