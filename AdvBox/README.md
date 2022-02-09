@@ -278,16 +278,16 @@ run the following commandlines to adversial example train and test:
 1. `cd PaddleSleeve/AdvBox/examples/image_segmentation`
 2. `CUDA_VISIBLE_DEVICES=0 python predict_adv.py        --config configs/quick_start/bisenet_optic_disc_512x512_1k.yml  --model_path ./path_segModel_testData/model_add_oppo2.pdparams    --image_path ./dataloader/P0024.jpg        --save_dir output/result`
 
-The successful execution of the `predict_adv`, will produce the following outputs.
+The successful execution of the `predict_adv.py`, will produce the following outputs.
 
 **Image Compares**
 
 <table align="center">
 <tr>
     <td align="center"><img src="./examples/image_segmentation/dataloader/P0024.jpg" width=300></td>
-    <td align="center"><img src="./examples/image_segmentation/output/result/pseudo_color_prediction/out_POO24.png" width=300></td>
+    <td align="center"><img src="./examples/image_segmentation/output/result/pseudo_color_prediction/out_P0024.png" width=300></td>
     <td align="center"><img src="./examples/image_segmentation/output/result/adv_P0024.jpg" width=300></td>
-    <td align="center"><img src="./examples/image_segmentation/output/result/pseudo_color_prediction/outadv_POO24.png" width=300></td>
+    <td align="center"><img src="./examples/image_segmentation/output/result/pseudo_color_prediction/outadv_P0024.png" width=300></td>
 </tr>
 
 <tr>
