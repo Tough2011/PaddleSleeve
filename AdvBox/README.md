@@ -298,7 +298,8 @@ The successful execution of the `predict_adv.py`, will produce the following out
 </tr>
 </table>
 
-
+# Noting ********
+   We generate adversarial samples under the "eval" pattern of the segmentation model. For the dropout reason, we achieve the "eval" pattern by manually setting the model parameters not to be updated. While during the test phase, the dropout operation will cause the output result has a small differencein the multiple tests, and then we can add the droput operation under "eval" patther manually. The specific operations are shown in the code.
 
 
 # Adversarial Perturbation for Object Detection
