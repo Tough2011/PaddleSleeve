@@ -268,10 +268,11 @@ perturbation for BiseNetv2 in the digital world. The demonstration is based on
 
 
 
-In `PaddleSleeve/AdvBox/examples/image_segmentation`, we demonstrate the Target Ghosting 
+In `PaddleSleeve/AdvBox/examples/image_segmentation`, we demonstrate the adversial 
 attack, a method using PGD to produce perturbation to minimize the feature difference between
 the values in non-target position and target position, successfully making the object undetected 
-and unsegmented in the images.  We use the model ouput of BiseNetv2 as the feature maps, the tensor 
+and unsegmented in the images.  Otherwise, we also achieve a method using gradient optimization method. 
+We use the model ouput of BiseNetv2 as the feature maps, the tensor 
 stands for segmentation confidence in BiseNetv2.
 
 run the following commandlines to adversial example train and test:
@@ -298,7 +299,7 @@ The successful execution of the `predict_adv.py`, will produce the following out
 </tr>
 </table>
 
-# Noting ********
+# Notes ********
    We generate adversarial samples under the "eval" pattern of the segmentation model. For the dropout reason, we achieve the "eval" pattern by manually setting the model parameters not to be updated. While during the test phase, the dropout operation will cause the output result has a small differencein the multiple tests, and then we can add the droput operation under "eval" patther manually. The specific operations are shown in the code.
 
 
