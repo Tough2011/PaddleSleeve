@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 import os
 import math
 
@@ -39,8 +40,52 @@ def rgb2bgr(img):
     img = cv2.merge([b, g, r])
     return img
 
+def gradient_descent_optim_attack(model, im):
+   
+    epsilon_ball = 0.1
+    steps = 300
+    epsilon_stepsize = 1e-2 
+    
+    shape = im.shape
+    
+    delta_init = paddle.fluid.initializer.Normal(loc=0.0, scale=0.05)
+    delta  = paddle.fluid.layers.create_parameter(im.shape, 'float32', default_initializer=delta_init)
+    opt = paddle.optimizer.Adam(learning_rate= 1e-3, parameters = [delta])
+    for step in range(steps):
+    logits = model(im + delta)
 
-def gradient_descent_attack(model, im):
+    index = paddle.argmax(logits[0], axis=1, keepdim=True, dtype='int32')
+    mask = paddle.fluid.layers.cast(index, bool)
+    masked_logit_pos = paddle.masked_select(logits[0][:,1:, :, :], mask)
+    masked_logit_neg = paddle.masked_select(logits[0][:,0:1, :, :], mask)
+    #print(paddle.fluid.layers.reduce_max(masked_logit_neg), paddle.fluid.layers.reduce_max(masked_logit_pos))
+    #loss =  paddle.fluid.layers.reduce_max(masked_logit_pos) - paddle.fluid.layers.reduce_max(masked_logit_neg)
+    loss = paddle.fluid.layers.reduce_mean(masked_logit_pos) - paddle.fluid.layers.reduce_mean(masked_logit_neg)
+    loss.backward(retain_graph = True)
+    opt.minimize(loss)
+    print('step:', step,'loss: ', loss)
+    delta = paddle.clip(delta, -epsilon_ball, epsilon_ball)
+    adv_img = im + delta
+    
+    
+    mean=(0.5, 0.5, 0.5)
+    std=(0.5, 0.5, 0.5)
+    mean = np.array(mean)[np.newaxis, np.newaxis, :]
+    std = np.array(std)[np.newaxis, np.newaxis, :]
+    adv_data = np.transpose(adv_img.squeeze(0).detach().cpu().numpy(), (1, 2, 0)) # 400, 400, 3
+    adv_data *= std
+    adv_data += mean
+    adv_data = np.clip(adv_data, 0., 1.)
+    adv_data *= 255.
+    adv_data = adv_data.astype(np.uint8)
+    adv_data = rgb2bgr(adv_data)
+    cv2.imwrite('./output/result/adv1.jpg', adv_data) 
+
+    return adv_img      
+
+
+
+def gradient_descent_iter_attack(model, im):
    
     epsilon_ball = 0.01
     steps = 50
@@ -158,8 +203,8 @@ def predict(model,
         #print(im.max(), im.min())
         im = im[np.newaxis, ...]
         im = paddle.to_tensor(im)
-        adv_img = gradient_descent_attack(model, im)  
-        
+        adv_img = gradient_descent_iter_attack(model, im)  
+        adv_img = gradient_descent_optim_attack(model, im)
         
         if aug_pred:
             pred, _  = infer.aug_inference(
