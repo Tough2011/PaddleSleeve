@@ -192,7 +192,7 @@ def predict(model,
         param.stop_gradient = True
         for module in model.sublayers():
             if isinstance(module, (paddle.nn.BatchNorm, paddle.nn.BatchNorm1D,
-                                   paddle.nn.BatchNorm2D, paddle.nn.BatchNorm3D)):
+                                   paddle.nn.BatchNorm2D, paddle.nn.BatchNorm3D)): # if test, add "paddle.nn.Dropout"
                 # print("evaled!!")
                 module.eval()
     for i, im_path in enumerate(img_lists[local_rank]):
