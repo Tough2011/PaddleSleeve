@@ -444,8 +444,7 @@ def ext_score(outs, data, datainfo):
 
     batch_res = get_infer_results(outs, clsid2catid)
     start = 0
-    flag1 = False
-    flag2 = False
+    flag = True
     bbox_num = outs['bbox_num']
     for i, im_id in enumerate(outs['im_id']):
         end = start + bbox_num[i]
@@ -454,12 +453,12 @@ def ext_score(outs, data, datainfo):
             catid, bbox, score = dt['category_id'], dt['bbox'], dt['score']
             if catid == 3  and score < 0.499:
                 print('res=========', catid,  score)
-                flag1 = True
+                flag = False
             if catid == 8  and score < 0.499:
-                flag2 = True
+                flag = True
             if catid==3 or catid == 4 or catid ==8:
                 print(catid, '===', score)
-        if flag1 and flag2:
+        if flag:
             return True 
      
     return False
