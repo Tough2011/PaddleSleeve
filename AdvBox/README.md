@@ -358,6 +358,8 @@ adversial example train:
 
 3. `python target_ghosting_eto.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img = dataloader/car_05.jpeg`
 
+Note: the origin image and the added patch size and position shoud be manually given for specific images.
+
 adversial example test:
 
 4. `python target_ghosting_eto_test.py -c configs/ppyolo/ppyolo_mbv3_large_coco.yml -o weights=https://paddledet.bj.bcebos.com/models/ppyolo_mbv3_large_coco.pdparams --infer_img=dataloader/car_05.jpeg`
