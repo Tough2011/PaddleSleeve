@@ -206,7 +206,7 @@ class attack_net(paddle.fluid.dygraph.Layer):
         self.trainer.load_weights(cfg.weights)
         
         # extrack mask
-        f = open('test/EOTB_car.xml')
+        f = open('EOTB.xml')
         dic = xmltodict.parse(f.read())
         mask_list = dic['annotation']['object']
         box_list = dic['annotation']['size']
@@ -317,10 +317,12 @@ class attack_net(paddle.fluid.dygraph.Layer):
             x = paddle.fluid.layers.reduce_sum(x, 0)
             C_nontarget += x
             
-            pcls_3 = paddle.reshape(pcls[:, :, :, :, 3], [b, anc*h*w])
+            pcls_3 = paddle.reshape(pcls[:, :, :, :, 3], [b, anc*h*w])   
             pcls_3 = paddle.fluid.layers.reduce_max(pcls_3, 1) 
             pcls_3 = paddle.fluid.layers.reduce_sum(pcls_3, 0) # b, 1
-            C_target += 0.8*pcls_3.  # weight 0.8 is able to adjust
+            C_target += 0.8*pcls_3.  # weight 0.8 is able to adjust, the attack objection is just judge error
+             # Note: if the attack objection is make the detected label not to be car-related, just add the car-realted label in C_target computation, as follows:
+            '''
             pcls_4 = paddle.reshape(pcls[:, :, :, :, 4], [b, anc*h*w])
             pcls_4 = paddle.fluid.layers.reduce_max(pcls_4, 1) # b
             pcls_4 = paddle.fluid.layers.reduce_sum(pcls_4, 0) # b, 1
@@ -329,7 +331,7 @@ class attack_net(paddle.fluid.dygraph.Layer):
             pcls_8 = paddle.fluid.layers.reduce_max(pcls_8, 1) # b
             pcls_8 = paddle.fluid.layers.reduce_sum(pcls_8, 0) # b, 1
             C_target += 0.1*pcls_8 # # weight 0.1 is able to adjust
-            
+            '''
      
         punishment = 0.001
         smoothness_punishment = 0.05 
